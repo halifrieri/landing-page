@@ -1,0 +1,209 @@
+<!DOCTYPE HTML>
+<!--
+    Hyperspace by HTML5 UP
+    html5up.net | @ajlkn
+    Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+    <head>
+        <title>Hyperspace by HTML5 UP</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        <link rel="stylesheet" href="assets/css/main.css" />
+        <style>
+            :root {
+                --primary-color: #a3b18a; /* Sage green */
+                --secondary-color: #6b705c; /* Complementary darker color if needed */
+            }
+
+            body, .wrapper, #sidebar, #footer {
+                background-color: var(--primary-color);
+            }
+
+            h1, h2, h3, h4, h5, h6, p, a {
+                color: var(--secondary-color);
+            }
+
+            .button, .actions .button {
+                background-color: var(--secondary-color);
+                border-color: var(--secondary-color);
+            }
+
+            .contact a, .icons a {
+                color: var(--secondary-color);
+            }
+
+            /* Specific adjustments for elements that might not inherit the primary color */
+            .inner {
+                background-color: var(--primary-color);
+            }
+            
+            /* Adjusting the sidebar navigation color */
+            #sidebar nav ul li a {
+                color: var(--secondary-color);
+            }
+
+            /* Making sure form fields are styled properly */
+            input, textarea {
+                background-color: #fff;
+                color: var(--secondary-color);
+                border: 1px solid var(--secondary-color);
+            }
+            
+            /* Updating specific elements to sage green */
+            .wrapper.style1, .wrapper.style2, .wrapper.style1-alt, .wrapper.style2-alt {
+                background-color: var(--primary-color);
+            }
+
+            #intro {
+                background-color: var(--primary-color);
+            }
+
+            #sidebar::before {
+                background-color: var(--primary-color);
+            }
+
+            /* Making the boxes of text for "My Work" and "Contact Me" the same shade of green as their background */
+            .wrapper.style2 .spotlights .content, .wrapper.style1 .inner {
+                background-color: var(--primary-color);
+            }
+        </style>
+        <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+    </head>
+    <body class="is-preload">
+
+        <!-- Sidebar -->
+            <section id="sidebar">
+                <div class="inner">
+                    <nav>
+                        <ul>
+                            <li><a href="#intro">Welcome</a></li>
+                            <li><a href="#one">Who I am</a></li>
+                            <li><a href="#three">Get in touch</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </section>
+
+        <!-- Wrapper -->
+            <div id="wrapper">
+
+                <!-- Intro -->
+                    <section id="intro" class="wrapper style1 fullscreen fade-up">
+                        <div class="inner">
+                            <h1>Haley Alexandra Lifrieri</h1>
+                            <p>Welcome to my personal website! I'm Haley Lifrieri, a recent graduate from Harvard College and tech enthusiast.<br /></p>
+                            <!-- <ul class="actions">
+                                <li><a href="#one" class="button scrolly">Learn more</a></li>
+                            </ul> -->
+                        </div>
+                    </section>
+
+                <!-- One -->
+                    <section id="one" class="wrapper style2 spotlights">
+                        <section>
+                            <a href="#" class="image"><img src="images/codepath_logo.jpg" alt="" data-position="center center" /></a>
+                            <div class="content">
+                                <div class="inner">
+                                    <h2>About Me</h2>
+                                    <p>Currently, I'm a Software Engineering Fellow at Headstarter AI, a fellow at CodePath, and a developing and consulting intern at CoordHealth.</p>
+                                    <!-- <ul class="actions">
+                                        <li><a href="generic.html" class="button">Learn more</a></li>
+                                    </ul> -->
+                                </div>
+                            </div>
+                        </section>
+                        <section>
+                            <a href="#" class="image"><img src="images/harvard_logo.jpg" alt="" data-position="top center" /></a>
+                            <div class="content">
+                                <div class="inner">
+                                    <h2>My Work</h2>
+                                    <p> I have worked as a tech associate for The Harvard Crimson and as a Research Assistant at the Harvard T.H. Chan School of Public Health. My experience includes developing and implementing code in R and SQL to manage health data and working on projects that aim to improve public health outcomes through technology.</p>
+                                    <!-- <ul class="actions">
+                                        <li><a href="generic.html" class="button">Learn more</a></li>
+                                    </ul> -->
+                                </div>
+                            </div>
+                        </section>
+                        <section>
+                            <a href="#" class="image"><img src="images/me.jpeg" alt="" data-position="25% 25%" /></a>
+                            <div class="content">
+                                <div class="inner">
+                                    <h2>Contact Me</h2>
+                                    <p>If you want to connect or have any queries, feel free to reach out through email or LinkedIn. I'm always open to discussing new ideas and opportunities.</p>
+                                    <ul class="actions">
+                                        <li><a href="mailto:halifrieri@gmail.com" class="button">Get in touch</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </section>
+                    </section>
+
+                <!-- Three -->
+                    <section id="three" class="wrapper style1 fade-up">
+                        <div class="inner">
+                            <h2>Get in touch</h2>
+                            <p>If you want to connect or have any queries, feel free to reach out through email or LinkedIn. I'm always open to discussing new ideas and opportunities.</p>
+                            <div class="split style1">
+                                <section>
+                                    <form method="post" action="mailto:halifrieri@gmail.com">
+                                        <div class="fields">
+                                            <div class="field half">
+                                                <label for="name">Name</label>
+                                                <input type="text" name="name" id="name" />
+                                            </div>
+                                            <div class="field half">
+                                                <label for="email">Email</label>
+                                                <input type="text" name="email" id="email" />
+                                            </div>
+                                            <div class="field">
+                                                <label for="message">Message</label>
+                                                <textarea name="message" id="message" rows="5"></textarea>
+                                            </div>
+                                        </div>
+                                        <ul class="actions">
+                                            <li><a href="mailto:halifrieri@gmail.com" class="button submit">Send Message</a></li>
+                                        </ul>
+                                    </form>
+                                </section>
+                                <section>
+                                    <ul class="contact">
+                                        <li>
+                                            <h3>Email</h3>
+                                            <a href="mailto:halifrieri@gmail.com">haleylifrieri@college.harvard.edu</a>
+                                        </li>
+                                        <li>
+                                            <h3>Social</h3>
+                                            <ul class="icons">
+                                                <li><a href="https://github.com/haleylifrieri" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+                                                <li><a href="https://linkedin.com/in/halifrieri" class="icon brands fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </section>
+                            </div>
+                        </div>
+                    </section>
+
+            </div>
+
+        <!-- Footer -->
+            <footer id="footer" class="wrapper style1-alt">
+                <div class="inner">
+                    <ul class="menu">
+                        <li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+                    </ul>
+                </div>
+            </footer>
+
+        <!-- Scripts -->
+            <script src="assets/js/jquery.min.js"></script>
+            <script src="assets/js/jquery.scrollex.min.js"></script>
+            <script src="assets/js/jquery.scrolly.min.js"></script>
+            <script src="assets/js/browser.min.js"></script>
+            <script src="assets/js/breakpoints.min.js"></script>
+            <script src="assets/js/util.js"></script>
+            <script src="assets/js/main.js"></script>
+
+    </body>
+</html>
