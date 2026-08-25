@@ -1,0 +1,121 @@
+---
+import { site } from "../data/site";
+
+/**
+ * Drafts a message and opens it in the visitor's mail client, pre-addressed.
+ * There is no backend here, so nothing is submitted to a server — which means
+ * nothing can be silently swallowed either. The button says exactly what it does.
+ */
+---
+
+<form id="contact-form" class="max-w-(--measure)" novalidate>
+  <div class="grid gap-5 sm:grid-cols-2">
+    <div>
+      <label for="cf-name" class="block text-sm text-muted">Name</label>
+      <input
+        id="cf-name"
+        name="name"
+        type="text"
+        autocomplete="name"
+        required
+        class="mt-1.5 w-full border-b border-rule bg-transparent py-2 outline-none transition-colors focus:border-accent"
+      />
+    </div>
+    <div>
+      <label for="cf-email" class="block text-sm text-muted">Your email</label>
+      <input
+        id="cf-email"
+        name="email"
+        type="email"
+        autocomplete="email"
+        required
+        class="mt-1.5 w-full border-b border-rule bg-transparent py-2 outline-none transition-colors focus:border-accent"
+      />
+    </div>
+  </div>
+
+  <div class="mt-5">
+    <label for="cf-message" class="block text-sm text-muted">Message</label>
+    <textarea
+      id="cf-message"
+      name="message"
+      rows="5"
+      maxlength="1500"
+      required
+      class="mt-1.5 w-full resize-y border-b border-rule bg-transparent py-2 outline-none transition-colors focus:border-accent"
+    ></textarea>
+  </div>
+
+  <p id="cf-error" class="mt-3 hidden text-sm text-accent" role="alert"></p>
+
+  <div class="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3">
+    <button
+      type="submit"
+      class="rounded-sm bg-ink px-5 py-2.5 text-sm font-medium text-bg transition-opacity hover:opacity-85"
+    >
+      Open in your email app
+    </button>
+    <button
+      type="button"
+      id="cf-copy"
+      class="text-sm text-muted underline-offset-4 transition-colors hover:text-accent"
+    >
+      or copy my address
+    </button>
+  </div>
+
+  <p class="mt-4 text-sm text-muted">
+    This opens a pre-addressed draft in your own mail app — nothing is sent until you send it.
+  </p>
+</form>
+
+<script define:vars={{ email: site.email }}>
+  const form = document.getElementById("contact-form");
+  const error = document.getElementById("cf-error");
+  const copyBtn = document.getElementById("cf-copy");
+
+  // Reference the inputs by id, not `form.name` — HTMLFormElement already has a
+  // `name` property, so named access returns that string instead of the input.
+  const nameInput = document.getElementById("cf-name");
+  const emailInput = document.getElementById("cf-email");
+  const messageInput = document.getElementById("cf-message");
+
+  const show = (msg) => {
+    error.textContent = msg;
+    error.classList.remove("hidden");
+  };
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    error.classList.add("hidden");
+
+    const name = nameInput.value.trim();
+    const from = emailInput.value.trim();
+    const message = messageInput.value.trim();
+
+    if (!name || !from || !message) {
+      show("Please fill in your name, email and a message.");
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(from)) {
+      show("That email address doesn't look right.");
+      return;
+    }
+
+    const subject = `Hello from haleylifrieri.com — ${name}`;
+    const body = `${message}\n\n—\n${name}\n${from}`;
+    window.location.href =
+      `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  });
+
+  copyBtn.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(email);
+      const original = copyBtn.textContent;
+      copyBtn.textContent = "copied ✓";
+      setTimeout(() => (copyBtn.textContent = original), 2000);
+    } catch {
+      show(`Copy failed — my address is ${email}`);
+    }
+  });
+</script>

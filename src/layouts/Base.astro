@@ -1,0 +1,110 @@
+---
+import "../styles/global.css";
+import { site, nav } from "../data/site";
+import Footer from "../components/Footer.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** Set on case-study pages so the crawler sees an Article, not the Person. */
+  article?: boolean;
+}
+
+const {
+  title,
+  description = site.description,
+  article = false,
+} = Astro.props;
+
+const pageTitle = title ? `${title} — ${site.name}` : `${site.name} — ${site.role}, ${site.org}`;
+const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).href;
+const ogImage = new URL("/og.png", Astro.site ?? site.url).href;
+
+const fontHref =
+  "https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&family=Inter:wght@400;500;600&display=swap";
+
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: site.name,
+  url: site.url,
+  jobTitle: site.role,
+  worksFor: { "@type": "Organization", name: site.org },
+  address: { "@type": "PostalAddress", addressLocality: "New York", addressRegion: "NY" },
+  alumniOf: { "@type": "CollegeOrUniversity", name: "Harvard College" },
+  email: `mailto:${site.email}`,
+  sameAs: [site.links.github, site.links.linkedin],
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate icon" href="/favicon.ico" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <meta property="og:type" content={article ? "article" : "website"} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:site_name" content={site.name} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <meta name="theme-color" content="#fbf9f6" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#14120f" media="(prefers-color-scheme: dark)" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    {/* Loaded non-blocking: a synchronous font stylesheet holds up first paint of
+        all body text. With display=swap the fallback stack paints immediately. */}
+    <link rel="preload" as="style" href={fontHref} onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href={fontHref} /></noscript>
+
+    <script type="application/ld+json" set:html={JSON.stringify(personSchema)} is:inline />
+  </head>
+
+  <body class="bg-bg text-ink antialiased">
+    <a href="#main" class="skip-link">Skip to content</a>
+
+    <header class="border-b border-rule">
+      <div class="mx-auto flex max-w-5xl items-baseline justify-between gap-6 px-6 py-5 sm:px-8">
+        <a href="/" class="font-display text-lg tracking-tight no-underline hover:text-accent">
+          {site.name}
+        </a>
+        <nav aria-label="Primary">
+          <ul class="flex flex-wrap items-baseline gap-x-5 gap-y-1 text-sm text-muted sm:gap-x-7">
+            {
+              nav.map((item) => (
+                <li>
+                  <a
+                    href={item.href}
+                    class="no-underline transition-colors hover:text-accent focus-visible:text-accent"
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <Footer />
+  </body>
+</html>

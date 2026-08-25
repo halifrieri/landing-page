@@ -1,2 +1,25 @@
+node_modules/
+dist/
+.astro/
+
+# environment
 .env
+.env.*
+!.env.example
+
+# hosting
+.vercel/
+
+# python leftovers — never again
 venv/
+openai-env/
+__pycache__/
+*.pyc
+
+# os
+.DS_Store
+Thumbs.db
+
+# the résumé is published from public/Haley-Lifrieri-Resume.pdf;
+# this is the working copy that gets dropped in the repo root
+Haley_Lifrieri_Resume_8_26 copy.pdf

@@ -1,0 +1,170 @@
+---
+import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
+import Base from "../layouts/Base.astro";
+import WorkCard from "../components/WorkCard.astro";
+import ContactForm from "../components/ContactForm.astro";
+import portrait from "../assets/haley.jpg";
+import { site } from "../data/site";
+
+const work = (await getCollection("work", ({ data }) => !data.draft)).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+---
+
+<Base>
+  <!-- Hero -->
+  <section class="mx-auto max-w-5xl px-6 pt-20 pb-16 sm:px-8 sm:pt-28 sm:pb-24">
+    <div class="rise">
+      <h1 class="text-display">{site.name}</h1>
+
+      <p class="mt-6 max-w-(--measure) text-lede text-balance">
+        Founding engineer at <span class="italic">Koi</span>, in New York. I build products end
+        to end — from the first prototype to the infrastructure that keeps them running.
+      </p>
+
+      <p class="mt-5 max-w-(--measure) text-muted">
+        Reconciliation pipelines on AWS Bedrock, Terraform and Temporal in production, and the
+        security program that took an early-stage company to SOC&nbsp;2 Type&nbsp;2.
+      </p>
+
+      <ul class="mt-9 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm">
+        <li>
+          <a
+            href="#work"
+            class="rounded-sm bg-ink px-5 py-2.5 font-medium text-bg no-underline transition-opacity hover:opacity-85"
+          >
+            See the work
+          </a>
+        </li>
+        <li>
+          <a href={site.resume} class="no-underline hover:text-accent">Resume (PDF)</a>
+        </li>
+        <li>
+          <a href={`mailto:${site.email}`} class="no-underline hover:text-accent">Email</a>
+        </li>
+        <li>
+          <a href={site.links.linkedin} rel="me noopener" class="no-underline hover:text-accent">
+            LinkedIn
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Work -->
+  <section id="work" class="mx-auto max-w-5xl scroll-mt-16 px-6 py-16 sm:px-8 sm:py-20">
+    <h2 class="text-title">Selected work</h2>
+    <p class="mt-3 max-w-(--measure) text-muted">
+      Most of what I've built over the past two years is private. These are written up to the
+      depth I can share.
+    </p>
+
+    <div class="mt-10">
+      {
+        work.map((entry) => (
+          <WorkCard
+            href={`/work/${entry.id}`}
+            title={entry.data.title}
+            blurb={entry.data.blurb}
+            org={entry.data.org}
+            period={entry.data.period}
+            stack={entry.data.stack}
+            outcome={entry.data.outcome}
+          />
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="mx-auto max-w-5xl scroll-mt-16 px-6 py-16 sm:px-8 sm:py-20">
+    <h2 class="text-title">About</h2>
+
+    <div class="mt-8 grid gap-12 md:grid-cols-[minmax(0,1fr)_15rem] md:gap-16">
+      <div class="max-w-(--measure) space-y-5">
+        <p>
+          I studied computer science at Harvard, graduating in March 2024 with a citation in
+          Spanish. Since that September I've been the founding engineer at Koi, where I've built
+          the document reconciliation pipelines, the infrastructure they run on, and the security
+          program that got us through a SOC&nbsp;2 Type&nbsp;2 audit.
+        </p>
+        <p>
+          Before Koi, I built pilot web and mobile applications at CoordHealth, shaping the
+          product from interviews with physicians and other users, and wrote R pipelines at the
+          Harvard T.H. Chan School of Public Health that harmonized health incidence data with
+          remote-sensing climate measures.
+        </p>
+      </div>
+
+      <div class="space-y-8">
+        <Image
+          src={portrait}
+          alt="Haley Lifrieri"
+          widths={[240, 480]}
+          sizes="(min-width: 768px) 15rem, 60vw"
+          class="w-40 rounded-sm md:w-full"
+          loading="lazy"
+        />
+
+        <dl class="space-y-6 text-sm">
+          <div>
+            <dt class="text-muted">Education</dt>
+            <dd class="mt-1">
+              Harvard College<br />
+              B.A. Computer Science, 2024<br />
+              <span class="text-muted">Language citation: Spanish</span>
+            </dd>
+          </div>
+          <div>
+            <dt class="text-muted">Certifications</dt>
+            <dd class="mt-1">Azure AI Engineer Associate<br />EMT-B</dd>
+          </div>
+          <div>
+            <dt class="text-muted">Languages</dt>
+            <dd class="mt-1">English, Spanish (fluent)<br />Italian (intermediate)</dd>
+          </div>
+          <div>
+            <dt class="text-muted">Based in</dt>
+            <dd class="mt-1">{site.location}</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="mx-auto max-w-5xl scroll-mt-16 px-6 py-16 sm:px-8 sm:py-20">
+    <h2 class="text-title">Get in touch</h2>
+    <p class="mt-3 max-w-(--measure) text-muted">
+      I'm open to talking about founding and senior engineering roles, and always happy to talk
+      about taking a product from zero to one — applied AI, the systems underneath it, and the
+      decisions that turn a rough requirement into something people actually want to use.
+    </p>
+
+    <div class="mt-10 grid gap-12 md:grid-cols-[minmax(0,1fr)_15rem] md:gap-16">
+      <ContactForm />
+
+      <div class="space-y-6 text-sm">
+        <div>
+          <p class="text-muted">Elsewhere</p>
+          <ul class="mt-1 space-y-1">
+            <li>
+              <a href={site.links.linkedin} rel="me noopener" class="no-underline hover:text-accent">
+                LinkedIn
+              </a>
+            </li>
+            <li>
+              <a href={site.links.github} rel="me noopener" class="no-underline hover:text-accent">
+                GitHub
+              </a>
+            </li>
+            <li>
+              <a href={site.resume} class="no-underline hover:text-accent">Resume (PDF)</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

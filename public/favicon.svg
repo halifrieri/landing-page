@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <style>
+    rect { fill: #17150f; }
+    text { fill: #fbf9f6; }
+    @media (prefers-color-scheme: dark) {
+      rect { fill: #f2ede4; }
+      text { fill: #14120f; }
+    }
+  </style>
+  <rect width="64" height="64" rx="12" />
+  <text
+    x="32"
+    y="33"
+    text-anchor="middle"
+    dominant-baseline="central"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="38"
+  >H</text>
+</svg>

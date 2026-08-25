@@ -1,0 +1,51 @@
+---
+interface Props {
+  href: string;
+  title: string;
+  blurb: string;
+  org: string;
+  period: string;
+  stack: readonly string[];
+  outcome?: string;
+}
+
+const { href, title, blurb, org, period, stack, outcome } = Astro.props;
+---
+
+<article class="group border-t border-rule py-8 first:border-t-0 sm:py-10">
+  <a href={href} class="block no-underline">
+    <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1 text-sm text-muted">
+      <span>{org}</span>
+      <span aria-hidden="true">·</span>
+      <span>{period}</span>
+      {
+        outcome && (
+          <span class="ml-auto font-medium text-accent">{outcome}</span>
+        )
+      }
+    </div>
+
+    <h3
+      class="mt-2 text-[1.7rem] transition-colors group-hover:text-accent sm:text-[2rem]"
+    >
+      {title}
+    </h3>
+
+    <p class="mt-2 max-w-(--measure) text-muted">{blurb}</p>
+
+    <div class="mt-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted">
+      {
+        stack.map((tech, i) => (
+          <>
+            {i > 0 && <span aria-hidden="true" class="opacity-50">·</span>}
+            <span>{tech}</span>
+          </>
+        ))
+      }
+    </div>
+
+    <p class="mt-4 text-sm text-accent">
+      Read more <span aria-hidden="true" class="inline-block transition-transform group-hover:translate-x-0.5">&rarr;</span>
+    </p>
+  </a>
+</article>

@@ -1,0 +1,210 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------
+   Design tokens
+   Editorial / typographic: serif display, generous whitespace,
+   near-black ink on a warm off-white ground, one muted accent.
+   --------------------------------------------------------------- */
+
+@theme {
+  --font-display: "Newsreader", ui-serif, Georgia, Cambria, "Times New Roman", serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --color-bg: #fbf9f6;
+  --color-surface: #f4f0e8;
+  --color-ink: #17150f;
+  --color-muted: #6b6559;
+  --color-rule: #e4ded3;
+  --color-accent: #8c3a1b;
+
+  --text-display: clamp(2.75rem, 7vw, 4.75rem);
+  --text-title: clamp(1.9rem, 3.6vw, 2.6rem);
+  --text-lede: clamp(1.2rem, 1.9vw, 1.5rem);
+
+  --measure: 68ch;
+}
+
+/* Tailwind v4 utilities resolve these at use-time, so overriding the
+   variables here re-themes every `bg-bg` / `text-ink` in one place. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #14120f;
+    --color-surface: #1d1a16;
+    --color-ink: #f2ede4;
+    --color-muted: #a29a8c;
+    --color-rule: #302b24;
+    --color-accent: #e08b62;
+  }
+}
+
+/* ---------------------------------------------------------------
+   Base
+   --------------------------------------------------------------- */
+
+/* These MUST live in @layer base. Unlayered CSS outranks layered CSS, so a bare
+   `a { color: inherit }` here would silently beat every `text-*` utility applied
+   to a link — which is exactly how the primary button lost its text color. */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    font-synthesis-weight: none;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    line-height: 1.08;
+    letter-spacing: -0.018em;
+    text-wrap: balance;
+  }
+
+  a {
+    color: inherit;
+    text-underline-offset: 0.22em;
+    text-decoration-thickness: from-font;
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-bg);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+/* Skip link — visible only once focused. */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 50;
+  padding: 0.75rem 1rem;
+  background: var(--color-ink);
+  color: var(--color-bg);
+}
+.skip-link:focus {
+  left: 1rem;
+  top: 1rem;
+}
+
+/* ---------------------------------------------------------------
+   Prose — case-study body copy
+   --------------------------------------------------------------- */
+
+.prose {
+  max-width: var(--measure);
+}
+.prose > * + * {
+  margin-top: 1.35em;
+}
+.prose h2 {
+  font-size: 1.6rem;
+  margin-top: 2.75em;
+  margin-bottom: 0.15em;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-rule);
+}
+.prose h2:first-child {
+  margin-top: 0;
+  border-top: 0;
+  padding-top: 0;
+}
+.prose h3 {
+  font-size: 1.2rem;
+  margin-top: 2em;
+}
+.prose ul,
+.prose ol {
+  padding-left: 1.15rem;
+}
+.prose ul { list-style: disc; }
+.prose ol { list-style: decimal; }
+.prose li + li { margin-top: 0.5em; }
+.prose li::marker { color: var(--color-muted); }
+.prose strong { font-weight: 600; }
+.prose a {
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+.prose blockquote {
+  border-left: 2px solid var(--color-rule);
+  padding-left: 1.25rem;
+  color: var(--color-muted);
+  font-style: italic;
+}
+.prose code {
+  font-size: 0.9em;
+  background: var(--color-surface);
+  padding: 0.15em 0.4em;
+  border-radius: 3px;
+}
+.prose pre {
+  background: var(--color-surface);
+  padding: 1rem 1.15rem;
+  border-radius: 6px;
+  overflow-x: auto;
+}
+.prose pre code {
+  background: none;
+  padding: 0;
+}
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+.prose th,
+.prose td {
+  text-align: left;
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid var(--color-rule);
+}
+.prose th {
+  font-weight: 600;
+  color: var(--color-muted);
+}
+
+/* Wide content must scroll inside itself, never the page. */
+.prose table,
+.prose pre {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+/* ---------------------------------------------------------------
+   Motion — one quiet entrance, and only if it's welcome
+   --------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  .rise {
+    animation: rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  }
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(0.6rem);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
